@@ -1,0 +1,7 @@
+{
+  "name": "OmniConverter: PDF to PPTX Admin & OCR Workspace",
+  "description": "A high-performance modular PDF-to-PPTX converter interface featuring dynamic model switching, watermark removal simulation, and detailed Chain-of-Thought (CoT) logging using Gemini AI.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
