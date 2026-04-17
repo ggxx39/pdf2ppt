@@ -29,6 +29,22 @@ const Workspace: React.FC<{ config: AppConfig; addLog: (log: any) => void }> = (
     const selected = e.target.files?.[0];
     if (!selected) return;
 
+    const allowedTypes = ['application/pdf', 'image/png', 'image/jpeg', 'image/webp'];
+    const isAllowedType = allowedTypes.includes(selected.type);
+
+    // 10MB size limit for security (DoS prevention)
+    const MAX_FILE_SIZE = 10 * 1024 * 1024;
+
+    if (!isAllowedType) {
+      alert("Security Block: Invalid file type. Please upload a PDF, PNG, JPEG, or WEBP file.");
+      return;
+    }
+
+    if (selected.size > MAX_FILE_SIZE) {
+      alert("Security Block: File size exceeds the 10MB limit.");
+      return;
+    }
+
     const isPdf = selected.type === 'application/pdf';
     const isImage = selected.type.startsWith('image/');
 
@@ -151,13 +167,13 @@ const Workspace: React.FC<{ config: AppConfig; addLog: (log: any) => void }> = (
       setProgress(100);
       setIsProcessing(false);
     } catch (error) {
-      console.error(error);
+      console.error("Secure log - Internal Processing Error:", error);
       setIsProcessing(false);
       addLog({
         step: "error_handler",
-        reasoning: "API or Processing Exception encountered.",
+        reasoning: "API or Processing Exception encountered during document conversion.",
         confidence: 0,
-        action: `Process halted: ${error instanceof Error ? error.message : "Unknown error"}`,
+        action: "Process halted securely: An unexpected processing error occurred.",
         status: 'error'
       });
     }

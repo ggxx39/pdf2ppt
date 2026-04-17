@@ -1,0 +1,4 @@
+## 2025-03-01 - [High] Strict MIME Type Validation & Error Suppression
+**Vulnerability:** Broad `.startsWith('image/')` check allows upload of unexpected formats (like `image/svg+xml` with script payloads for XSS). Lack of size limit enables DoS through memory exhaustion. Raw exception messages shown in UI.
+**Learning:** Checking file extensions/prefix is not secure. Client-side processing allows potential leaks in stack traces. Also note an architectural security gap: the client-only application design inherently exposes the Gemini API key to the browser via Vite's `define`.
+**Prevention:** Use an exact whitelist of allowed MIME types (e.g. `application/pdf`, `image/png`, `image/jpeg`, `image/webp`). Implement strict file size boundaries (e.g. 10MB). Suppress raw exception messages and output generic error text to users. API keys should be moved to a backend service in the future.
