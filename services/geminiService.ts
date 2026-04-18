@@ -133,7 +133,7 @@ export class GeminiService {
       return JSON.parse(response.text || '{}');
     } catch (error) {
       console.error("Gemini OCR Error:", error);
-      throw error;
+      throw new Error('An error occurred during OCR processing'); // Don't leak details
     }
   }
 
