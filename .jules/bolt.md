@@ -1,0 +1,3 @@
+## 2023-10-27 - [Isolating Heavy Libraries with Route-Level Code Splitting]
+**Learning:** Statically importing heavy component dependencies like `pptxgenjs` and `recharts` in the main `App.tsx` bundle significantly inflates initial load time (TTI) and main bundle size, regardless of whether the user navigates to those specific routes initially.
+**Action:** Always wrap route components containing heavy third-party libraries using `React.lazy()` and `<Suspense>` boundaries to ensure they are downloaded only when the user requests that specific functionality. This avoids penalizing the initial load for features that might not be used in the session.
