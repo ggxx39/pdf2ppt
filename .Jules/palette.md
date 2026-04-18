@@ -1,0 +1,3 @@
+## 2025-03-01 - Interactive Element Accessibility Behind Hover States
+**Learning:** Action buttons that are hidden by default and rely on parent `hover` states (like `group-hover`) to become visible remain completely inaccessible to keyboard users tabbing through the UI unless explicitly handled.
+**Action:** Always pair `group-hover` visibility classes (e.g., `group-hover:opacity-100`) with `focus-within` (e.g., `focus-within:opacity-100`) on the parent container to ensure the interactive elements are revealed when receiving keyboard focus. Furthermore, always provide an `aria-label` for icon-only buttons.
