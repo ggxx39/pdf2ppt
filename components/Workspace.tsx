@@ -157,7 +157,7 @@ const Workspace: React.FC<{ config: AppConfig; addLog: (log: any) => void }> = (
         step: "error_handler",
         reasoning: "API or Processing Exception encountered.",
         confidence: 0,
-        action: `Process halted: ${error instanceof Error ? error.message : "Unknown error"}`,
+        action: "Process halted: An unexpected error occurred during processing.",
         status: 'error'
       });
     }
@@ -190,7 +190,8 @@ const Workspace: React.FC<{ config: AppConfig; addLog: (log: any) => void }> = (
       }
     });
 
-    pptx.writeFile({ fileName: `${file?.name.split('.')[0]}_Converted.pptx` });
+    const safeFileName = file?.name ? file.name.replace(/[\/\\]/g, '_').split('.')[0] : 'document';
+    pptx.writeFile({ fileName: `${safeFileName}_Converted.pptx` });
   };
 
   return (
