@@ -1,0 +1,3 @@
+## 2025-03-09 - Accessible hidden interactive elements
+**Learning:** Hidden interactive elements shown on `group-hover` (e.g. file remove buttons on image overlays) remain inaccessible to keyboard users and screen readers when they tab into them if focus states aren't managed properly.
+**Action:** When using Tailwind's `group-hover` to show hidden interactive elements, always pair it with `focus-within` on the parent container, ensure the nested interactive element has an `aria-label`, and add explicit `focus` state styles (e.g. `focus:ring`) so the element is visible and visually highlighted when navigated to via keyboard.
