@@ -29,6 +29,20 @@ const Workspace: React.FC<{ config: AppConfig; addLog: (log: any) => void }> = (
     const selected = e.target.files?.[0];
     if (!selected) return;
 
+    // Security Enhancement: Validate file type explicitly to prevent unsupported types
+    const allowedTypes = ['application/pdf', 'image/png', 'image/jpeg', 'image/webp'];
+    if (!allowedTypes.includes(selected.type)) {
+      alert("Invalid file type. Please upload a valid PDF, PNG, JPG, or WEBP file.");
+      return;
+    }
+
+    // Security Enhancement: Enforce 10MB size limit to prevent memory exhaustion / DoS
+    const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+    if (selected.size > MAX_FILE_SIZE) {
+      alert("File is too large. Maximum allowed size is 10MB.");
+      return;
+    }
+
     const isPdf = selected.type === 'application/pdf';
     const isImage = selected.type.startsWith('image/');
 
