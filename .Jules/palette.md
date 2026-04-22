@@ -1,0 +1,3 @@
+## 2024-05-24 - [Hidden Interactive Elements Keyboard Accessibility]
+**Learning:** Found an accessibility pattern in this codebase where elements hidden via `opacity-0 group-hover:opacity-100` are inaccessible via keyboard navigation because the hover state does not trigger on focus.
+**Action:** Always add `focus-within:opacity-100` to the parent container when using `group-hover:opacity-100` for hidden interactive elements, and add clear `focus-visible` styles to the interactive element itself.
