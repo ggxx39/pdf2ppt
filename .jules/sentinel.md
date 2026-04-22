@@ -1,0 +1,4 @@
+## 2024-05-24 - [Fix Info Leakage in Error Responses]
+**Vulnerability:** Raw exception messages from `@google/genai` API calls were being displayed directly in the UI (`addLog` in Workspace.tsx) and bubbled up un-sanitized from `geminiService.ts`. This could expose internal stack traces, API keys, or backend context.
+**Learning:** It's important to differentiate between developer observability (internal logging) and user-facing error reporting. The previous code either bubbled the error up entirely or swallowed it completely when trying to fix it.
+**Prevention:** Always follow the "fail securely" pattern. Use `console.error("Generic message:", error);` internally to preserve stack traces for debugging, but `throw new Error("Generic user-facing error")` or display generic strings to the UI.

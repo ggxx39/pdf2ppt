@@ -132,8 +132,8 @@ export class GeminiService {
 
       return JSON.parse(response.text || '{}');
     } catch (error) {
-      console.error("Gemini OCR Error:", error);
-      throw error;
+      console.error("Gemini OCR Error: Document analysis failed.", error);
+      throw new Error("An error occurred during document analysis.");
     }
   }
 
