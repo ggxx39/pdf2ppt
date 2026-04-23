@@ -132,17 +132,22 @@ export class GeminiService {
 
       return JSON.parse(response.text || '{}');
     } catch (error) {
-      console.error("Gemini OCR Error:", error);
-      throw error;
+      console.error("Gemini OCR Error: Failed to process document.", error);
+      throw new Error("An error occurred during OCR processing.");
     }
   }
 
   async translateText(text: string, targetLang: string): Promise<string> {
-    const response = await this.ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
-      contents: `Translate the following text to ${targetLang}: \n\n${text}`
-    });
-    return response.text || text;
+    try {
+      const response = await this.ai.models.generateContent({
+        model: 'gemini-3-flash-preview',
+        contents: `Translate the following text to ${targetLang}: \n\n${text}`
+      });
+      return response.text || text;
+    } catch (error) {
+      console.error("Gemini Translation Error: Failed to translate text.", error);
+      throw new Error("An error occurred during translation.");
+    }
   }
 }
 
