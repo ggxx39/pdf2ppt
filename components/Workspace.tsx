@@ -223,10 +223,11 @@ const Workspace: React.FC<{ config: AppConfig; addLog: (log: any) => void }> = (
                 </div>
               )}
               
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4 rounded-xl">
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity flex items-center justify-center gap-4 rounded-xl">
                 <button 
+                  aria-label="Remove document"
                   onClick={() => { setFile(null); setFileData(null); setPreviewUrl(null); }}
-                  className="p-3 bg-red-500 text-white rounded-full hover:bg-red-600 shadow-lg transform hover:scale-110 transition-transform"
+                  className="p-3 bg-red-500 text-white rounded-full hover:bg-red-600 shadow-lg transform hover:scale-110 transition-transform focus:outline-none focus-visible:ring-4 focus-visible:ring-red-400"
                 >
                   <Trash2 size={24} />
                 </button>

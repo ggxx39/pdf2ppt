@@ -1,0 +1,3 @@
+## 2025-04-25 - [Accessibility Issue in Hover Overlays]
+**Learning:** Icon-only buttons inside `group-hover` overlays become invisible to keyboard-only users, effectively hiding critical functionality (like deleting a document).
+**Action:** Always pair `group-hover:opacity-100` with `focus-within:opacity-100` on the parent container, and ensure the interactive elements inside have `aria-label` and `focus-visible` styles.
