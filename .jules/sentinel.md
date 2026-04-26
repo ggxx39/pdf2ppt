@@ -1,0 +1,4 @@
+## 2024-05-24 - DoS Risk via FileReader & Data Leaks via Error Messages
+**Vulnerability:** Client-side application could read arbitrarily large files into memory using FileReader.readAsDataURL(), causing memory exhaustion and a potential Denial of Service (DoS) attack vector. Exception objects were also being fully printed/returned through logs and potentially UI, leaking internal state or API details.
+**Learning:** File upload components need explicit file size limitations enforced *before* attempting to process the file in memory. Catch blocks must actively overwrite or scrub error messages instead of blindly relying on the caught exception to be safe for display.
+**Prevention:** Implement file size checks (e.g., `size > 15 * 1024 * 1024` for 15MB) immediately after file selection. Standardize error handling to intercept and replace native error objects with generic strings (e.g., "An error occurred during processing").
