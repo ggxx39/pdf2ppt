@@ -29,6 +29,19 @@ const Workspace: React.FC<{ config: AppConfig; addLog: (log: any) => void }> = (
     const selected = e.target.files?.[0];
     if (!selected) return;
 
+    // Security: Prevent client-side DoS from large files in memory
+    if (selected.size > 15 * 1024 * 1024) {
+      addLog({
+        step: "file_upload",
+        reasoning: "File size exceeds maximum allowed limit (15MB).",
+        confidence: 1.0,
+        action: "Upload rejected for security reasons.",
+        status: 'error'
+      });
+      alert("File is too large. Maximum size is 15MB.");
+      return;
+    }
+
     const isPdf = selected.type === 'application/pdf';
     const isImage = selected.type.startsWith('image/');
 
@@ -157,7 +170,8 @@ const Workspace: React.FC<{ config: AppConfig; addLog: (log: any) => void }> = (
         step: "error_handler",
         reasoning: "API or Processing Exception encountered.",
         confidence: 0,
-        action: `Process halted: ${error instanceof Error ? error.message : "Unknown error"}`,
+        // Security: Use generic error message to prevent leaking internal details or stack traces
+        action: `Process halted: An error occurred during processing.`,
         status: 'error'
       });
     }
