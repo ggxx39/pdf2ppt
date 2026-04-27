@@ -1,0 +1,3 @@
+## 2025-03-08 - Keyboard Navigation in Hover-Only Reveal Elements
+**Learning:** When using Tailwind's `group-hover:opacity-100` to show hidden interactive elements (like overlay buttons on an image or file), keyboard users cannot access them because `hover` is mouse-only. Without visibility, they cannot focus on the element or know it exists.
+**Action:** Always pair `group-hover:opacity-100` with `focus-within:opacity-100` on the parent container, and ensure the interactive children have proper `focus:outline-none focus:ring-2` focus states. This ensures the overlay reveals when navigating via keyboard <kbd>Tab</kbd> key.
