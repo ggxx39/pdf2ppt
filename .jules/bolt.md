@@ -1,0 +1,3 @@
+## 2025-04-27 - Route-Level Code Splitting for Heavy Dependencies
+**Learning:** In Vite-based React apps, synchronous imports of heavy dependencies (like `pptxgenjs` in `Workspace` and `recharts` in `Dashboard`) cause the main bundle to bloat, which slows down initial load time. Route-level dynamic imports (`React.lazy`) effectively split these into separate chunks (e.g. `Dashboard.js` 352kB, `Workspace.js` 675kB).
+**Action:** When working on components that include massive library dependencies (especially those only used on specific views or routes), wrap them in `React.lazy` and `React.Suspense` from the get-go instead of synchronously loading them.
