@@ -29,6 +29,19 @@ const Workspace: React.FC<{ config: AppConfig; addLog: (log: any) => void }> = (
     const selected = e.target.files?.[0];
     if (!selected) return;
 
+    // Security: Prevent extremely large files (e.g. > 10MB) from crashing the browser via memory exhaustion
+    const MAX_FILE_SIZE_MB = 10;
+    if (selected.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
+      addLog({
+        step: "file_upload",
+        reasoning: `File size exceeds the ${MAX_FILE_SIZE_MB}MB limit.`,
+        confidence: 0,
+        action: "Rejected file to prevent memory exhaustion.",
+        status: 'error'
+      });
+      return;
+    }
+
     const isPdf = selected.type === 'application/pdf';
     const isImage = selected.type.startsWith('image/');
 
@@ -151,13 +164,14 @@ const Workspace: React.FC<{ config: AppConfig; addLog: (log: any) => void }> = (
       setProgress(100);
       setIsProcessing(false);
     } catch (error) {
-      console.error(error);
+      // Security: Do not leak stack traces or raw error info to console or UI.
+      console.error("An error occurred during file processing.");
       setIsProcessing(false);
       addLog({
         step: "error_handler",
         reasoning: "API or Processing Exception encountered.",
         confidence: 0,
-        action: `Process halted: ${error instanceof Error ? error.message : "Unknown error"}`,
+        action: "Process halted: An unexpected error occurred.",
         status: 'error'
       });
     }
