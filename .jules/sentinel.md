@@ -1,0 +1,4 @@
+## 2025-03-08 - [Medium] Missing File Size Limits & Error Info Leakage
+**Vulnerability:** Found missing file size validation on the client side, allowing arbitrarily large files to be loaded into the browser memory, leading to potential Denial of Service (DoS) risks. Also, discovered that the UI audit logs expose raw exception messages `error.message` to the end-user during processing failures.
+**Learning:** This issue exists because developers often assume client-side constraints are sufficient or fail to implement basic input sanitization (like size limits) in UI components. Error handling was also logging full exception details directly to the user-facing audit UI, violating the "fail securely" principle.
+**Prevention:** Always validate file sizes before reading them into memory with `FileReader` to prevent resource exhaustion. Additionally, catch blocks should sanitize error outputs shown to users, logging raw details only to the console or secure server logs.
