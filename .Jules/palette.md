@@ -1,0 +1,3 @@
+## 2025-04-30 - Keyboard Accessibility with Tailwind's group-hover
+**Learning:** In the Workspace component, the "Remove file" icon button was hidden behind a `opacity-0 group-hover:opacity-100` overlay. This pattern hides interactive elements from keyboard-only users, as tabbing to the button doesn't trigger the group-hover state.
+**Action:** When using Tailwind's `group-hover` to show hidden interactive elements like buttons, always pair it with `focus-within:opacity-100` on the parent container. Also ensure the button itself has visible focus states (e.g., `focus-visible:ring-4`) and proper `aria-label` since it's typically icon-only.
