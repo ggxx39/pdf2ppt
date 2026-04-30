@@ -1,0 +1,5 @@
+## 2026-04-30 - Client-Side DoS and Info Leakage in File Processing
+
+**Vulnerability:** The application accepts file uploads and reads them directly into memory as base64 without size validation, leading to potential browser memory exhaustion (DoS). Additionally, the catch block in the file processing workflow exposes raw error messages to the UI.
+**Learning:** Client-only architecture must be particularly careful with resource management since `FileReader` loads the entire file into the browser's memory. Memory limits can be easily exceeded by malicious large file uploads. Further, exposing raw errors from internal processing logic directly to the user interface violates the "fail securely" principle and may leak internal state or API details.
+**Prevention:** Always implement strict file size validation (e.g., 10MB limit) *before* processing files, especially on the client side. Ensure that all generic catch blocks in user-facing flows sanitize error messages before adding them to UI logs, while preserving detailed original errors in background logs (`console.error`) for debugging.
