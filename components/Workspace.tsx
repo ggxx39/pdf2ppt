@@ -33,6 +33,13 @@ const Workspace: React.FC<{ config: AppConfig; addLog: (log: any) => void }> = (
     const isImage = selected.type.startsWith('image/');
 
     if (isPdf || isImage) {
+      // Security: Prevent browser memory exhaustion (DoS) by enforcing 10MB limit
+      const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+      if (selected.size > MAX_FILE_SIZE) {
+        alert("File size exceeds the 10MB limit. Please upload a smaller file.");
+        return;
+      }
+
       setFile(selected);
       
       const reader = new FileReader();
@@ -151,13 +158,14 @@ const Workspace: React.FC<{ config: AppConfig; addLog: (log: any) => void }> = (
       setProgress(100);
       setIsProcessing(false);
     } catch (error) {
-      console.error(error);
+      console.error("Gemini API or Processing Error:", error); // Keep raw error for internal debugging
       setIsProcessing(false);
       addLog({
         step: "error_handler",
         reasoning: "API or Processing Exception encountered.",
         confidence: 0,
-        action: `Process halted: ${error instanceof Error ? error.message : "Unknown error"}`,
+        // Security: Sanitize error message to prevent leaking sensitive API data or internal state
+        action: `Process halted: A secure processing error occurred. Please try again.`,
         status: 'error'
       });
     }
