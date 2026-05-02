@@ -1,0 +1,4 @@
+## 2024-11-20 - Sensitive Data Exposure in Error Handling
+**Vulnerability:** The client-side application catches API errors (specifically those originating from the Gemini API) and was directly logging `error.message` to a user-facing audit log (`LogPanel`).
+**Learning:** Due to the application's client-only architecture, Vite exposes the `GEMINI_API_KEY` to the browser. If an API request fails (e.g., due to quota limits or malformed queries), the raw error message from the provider might inadvertently contain sensitive configuration details or confirm the existence of specific keys. Displaying this raw error exposes internal system state to end users.
+**Prevention:** Always implement a boundary between internal errors and user-facing messages. Apply the 'fail securely' principle: log the raw error internally (`console.error`) for debugging, but sanitize the error state before displaying it in the UI (e.g., "An unexpected error occurred during processing").
