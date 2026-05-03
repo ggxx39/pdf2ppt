@@ -1,0 +1,3 @@
+## 2025-03-09 - Accessible Hover Overlay Interactions
+**Learning:** When using Tailwind's `group-hover:opacity-100` to show hidden interactive elements (like a delete overlay on a file card), keyboard users will never see the element to interact with it, because `hover` doesn't trigger on keyboard `Tab` focus.
+**Action:** Always pair `group-hover:opacity-*` with `focus-within:opacity-*` on the parent container. This ensures that when an interactive element inside the hidden container receives keyboard focus, the container becomes visible. Also, ensure the interactive elements have proper `focus-visible:ring` styles so the focus indicator is clearly visible on top of the overlay.
