@@ -1,0 +1,3 @@
+## 2024-05-03 - Lazy Loading Route Components
+**Learning:** The application does not use a traditional routing library, meaning all tab components (Dashboard, Workspace, ConfigEditor, LogPanel) were originally imported statically and bundled into a single massive index chunk (over 1.2MB). Heavy dependencies like `recharts` and `pptxgenjs` were loaded immediately, even if the user never navigated to those tabs.
+**Action:** Always check the root component (e.g., App.tsx) of client-side single-page applications to verify if heavy views are statically imported. Use `React.lazy()` combined with a `<Suspense>` boundary to split views into separate chunks to significantly reduce initial bundle size and improve load times.
