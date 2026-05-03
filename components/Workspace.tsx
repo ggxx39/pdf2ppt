@@ -32,6 +32,12 @@ const Workspace: React.FC<{ config: AppConfig; addLog: (log: any) => void }> = (
     const isPdf = selected.type === 'application/pdf';
     const isImage = selected.type.startsWith('image/');
 
+    const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+    if (selected.size > MAX_FILE_SIZE) {
+      alert(`File size exceeds 10MB limit. Selected file size: ${(selected.size / 1024 / 1024).toFixed(2)}MB`);
+      return;
+    }
+
     if (isPdf || isImage) {
       setFile(selected);
       
@@ -157,7 +163,7 @@ const Workspace: React.FC<{ config: AppConfig; addLog: (log: any) => void }> = (
         step: "error_handler",
         reasoning: "API or Processing Exception encountered.",
         confidence: 0,
-        action: `Process halted: ${error instanceof Error ? error.message : "Unknown error"}`,
+        action: "Process halted: An unexpected error occurred during processing. Please try again.",
         status: 'error'
       });
     }
