@@ -1,0 +1,3 @@
+## 2025-05-04 - Hidden Interactive Elements Accessibility
+**Learning:** Found an accessibility issue pattern specific to this app's components where hidden interactive elements (using Tailwind's `group-hover:opacity-100` to show on hover) become inaccessible via keyboard because they are not visually revealed on focus, leaving users tabbing into invisible elements.
+**Action:** When using `group-hover` to hide/show interactive elements, always pair it with `focus-within:opacity-100` on the parent container, and add clear `focus:ring` states to the interactive child element to ensure keyboard accessibility.
