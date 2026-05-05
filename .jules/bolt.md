@@ -1,0 +1,3 @@
+## 2024-05-05 - Route-Level Code Splitting for Heavy Dependencies
+**Learning:** The application bundles heavy libraries like `pptxgenjs` (in Workspace) and `recharts` (in Dashboard) into the main chunk, resulting in a >1.2MB initial payload. Because the application uses dynamic tab rendering instead of a routing library, these dependencies are loaded synchronously even if the user never visits the tabs that need them.
+**Action:** Implemented `React.lazy` and `Suspense` in `App.tsx` to dynamically load tab components. This splits the heavy dependencies into separate chunks, significantly reducing the initial bundle size and improving the application's load time.

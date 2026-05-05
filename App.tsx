@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, Suspense, lazy } from 'react';
 import { 
   LayoutDashboard, 
   Settings, 
@@ -14,10 +14,13 @@ import {
   LogOut
 } from 'lucide-react';
 import { AppConfig, OCRModel, CoTLog } from './types';
-import Dashboard from './components/Dashboard';
-import Workspace from './components/Workspace';
-import ConfigEditor from './components/ConfigEditor';
-import LogPanel from './components/LogPanel';
+
+// ⚡ Bolt Optimization: Lazy load heavy components to reduce initial bundle size (>1.2MB)
+// Dashboard uses recharts, Workspace uses pptxgenjs and @google/genai.
+const Dashboard = lazy(() => import('./components/Dashboard'));
+const Workspace = lazy(() => import('./components/Workspace'));
+const ConfigEditor = lazy(() => import('./components/ConfigEditor'));
+const LogPanel = lazy(() => import('./components/LogPanel'));
 
 const DEFAULT_CONFIG: AppConfig = {
   ocr: {
@@ -155,10 +158,12 @@ const App: React.FC = () => {
         </header>
 
         <div className="p-8">
-          {activeTab === 'dashboard' && <Dashboard config={config} logs={logs} />}
-          {activeTab === 'workspace' && <Workspace config={config} addLog={addLog} />}
-          {activeTab === 'config' && <ConfigEditor config={config} setConfig={setConfig} />}
-          {activeTab === 'logs' && <LogPanel logs={logs} />}
+          <Suspense fallback={<div className="flex items-center justify-center h-full text-slate-500 animate-pulse">Loading module...</div>}>
+            {activeTab === 'dashboard' && <Dashboard config={config} logs={logs} />}
+            {activeTab === 'workspace' && <Workspace config={config} addLog={addLog} />}
+            {activeTab === 'config' && <ConfigEditor config={config} setConfig={setConfig} />}
+            {activeTab === 'logs' && <LogPanel logs={logs} />}
+          </Suspense>
         </div>
       </main>
     </div>
