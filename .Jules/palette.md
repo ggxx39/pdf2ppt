@@ -1,0 +1,3 @@
+## 2024-05-17 - Keyboard Inaccessibility of Hover-revealed Controls
+**Learning:** Tailwind's `group-hover` utility is often used to hide interactive elements (like delete buttons over image previews) until a mouse hovers over them. However, this pattern completely breaks keyboard accessibility, as focus cannot reach the element if it remains visually hidden (`opacity-0`) and users can't see what they are focusing on.
+**Action:** Always pair `group-hover:opacity-100` with `focus-within:opacity-100` on the parent container to ensure hidden controls become visible when keyboard users tab into them, and ensure the interactive elements themselves have proper focus outlines (e.g. `focus:ring`).
