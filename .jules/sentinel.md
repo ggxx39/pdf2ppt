@@ -1,0 +1,4 @@
+## 2024-05-24 - Client-side Memory Exhaustion (DoS) and Info Leakage
+**Vulnerability:** The application reads files directly into a memory buffer as base64 strings using `FileReader` without size limits. It also exposes raw error messages to the UI during Gemini API failures.
+**Learning:** In a pure client-side processing architecture like OmniConv, large file uploads can quickly exhaust browser memory and crash the application, creating a local Denial of Service (DoS). Additionally, failing to sanitize error messages in catch blocks that interact with external APIs (like Gemini) can leak sensitive data or internal architectural details to users.
+**Prevention:** Always implement strict file size validation (e.g., 10MB) *before* processing files with `FileReader`. Ensure that `catch` blocks separate internal logging (`console.error`) from user-facing error messages, following the 'fail securely' principle.
