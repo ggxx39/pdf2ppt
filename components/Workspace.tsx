@@ -151,13 +151,15 @@ const Workspace: React.FC<{ config: AppConfig; addLog: (log: any) => void }> = (
       setProgress(100);
       setIsProcessing(false);
     } catch (error) {
+      // Log raw error internally for debugging, do not expose to user UI
       console.error(error);
       setIsProcessing(false);
       addLog({
         step: "error_handler",
         reasoning: "API or Processing Exception encountered.",
         confidence: 0,
-        action: `Process halted: ${error instanceof Error ? error.message : "Unknown error"}`,
+        // SECURITY: Sanitized error message to prevent sensitive info leakage
+        action: "Process halted: An unexpected error occurred.",
         status: 'error'
       });
     }
