@@ -1,15 +1,20 @@
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { CoTLog } from '../types';
 import { Search, Filter, Terminal, ChevronRight, Clock, ShieldCheck, AlertTriangle, Info } from 'lucide-react';
 
 const LogPanel: React.FC<{ logs: CoTLog[] }> = ({ logs }) => {
   const [filter, setFilter] = useState('');
 
-  const filteredLogs = logs.filter(log => 
-    log.reasoning.toLowerCase().includes(filter.toLowerCase()) || 
-    log.step.toLowerCase().includes(filter.toLowerCase())
-  );
+  // ⚡ Bolt: Memoize filter result and avoid redundant string conversions
+  const filteredLogs = useMemo(() => {
+    if (!filter) return logs;
+    const lowerFilter = filter.toLowerCase();
+    return logs.filter(log =>
+      log.reasoning.toLowerCase().includes(lowerFilter) ||
+      log.step.toLowerCase().includes(lowerFilter)
+    );
+  }, [logs, filter]);
 
   return (
     <div className="space-y-6">
