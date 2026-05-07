@@ -1,0 +1,4 @@
+## 2024-05-24 - DoS and Error Leakage in Client-Side OCR
+**Vulnerability:** The application was vulnerable to client-side Denial of Service via memory exhaustion because it used `FileReader` to load entire user-uploaded files into base64 memory without any file size limits. Additionally, it leaked sensitive external API error messages (`error.message`) directly into the UI logs.
+**Learning:** In purely client-side architectures, large files cannot be safely processed in memory without crashing the browser tab. External error data, even if it seems benign, should never be piped directly to the UI, as it could reveal internal API keys, rate limits, or backend stack traces.
+**Prevention:** Implement strict file size limits (`selected.size > MAX_SIZE`) before starting `FileReader`. Always sanitize error messages displayed to the user while logging the raw `error` object internally (`console.error`).
