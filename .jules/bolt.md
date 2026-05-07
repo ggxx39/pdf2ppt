@@ -1,0 +1,3 @@
+## 2024-05-24 - Route-Level Code Splitting for Heavy Modules
+**Learning:** This application dynamically renders heavy components (like `Workspace` needing `pptxgenjs` and `Dashboard` needing `recharts`) using a simple `activeTab` state in `App.tsx` instead of a dedicated routing library. Because these were statically imported, their massive dependencies were blocking the main thread during initial load, leading to a huge unoptimized bundle size that affected Time to Interactive (TTI).
+**Action:** Use `React.lazy` combined with `<Suspense>` in the tab-switching logic to defer loading the heavy chunks until their respective tab is activated by the user.
