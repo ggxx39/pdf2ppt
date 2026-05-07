@@ -1,0 +1,3 @@
+## 2024-06-25 - Combining focus-within with group-hover
+**Learning:** For components that reveal interactive elements via `group-hover:opacity-100` (like a trash icon on an uploaded file), keyboard users cannot trigger this hover state. If the parent container doesn't react to focus, the button within it receives focus (it's in the tab order), but it remains invisible to sighted keyboard users.
+**Action:** Whenever using `group-hover` to show hidden interactive elements, always pair it with `focus-within` on the parent container (e.g., `group-hover:opacity-100 focus-within:opacity-100`) to ensure keyboard accessibility. Ensure the child button also has visible focus styles (`focus-visible:ring-2`) and proper `aria-label`s.
