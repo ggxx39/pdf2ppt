@@ -1,0 +1,4 @@
+## 2024-05-15 - [Browser Memory Exhaustion (DoS) via FileReader]
+**Vulnerability:** Client-side application reads entire file contents into a memory buffer using `FileReader.readAsDataURL` or similar methods without checking file size, allowing malicious or oversized files to cause browser crashes or out-of-memory errors (DoS).
+**Learning:** Client-side file processing is not immune to DoS. An unconstrained file input where files are read into variables entirely client-side acts as a localized DoS vector, destroying user experience and potentially locking up the application state.
+**Prevention:** Always enforce strict file size limits (e.g., `< 10MB`) directly on the file object `File.size` *before* instantiating `FileReader` or processing file contents. Consider chunked processing for legitimately large files.

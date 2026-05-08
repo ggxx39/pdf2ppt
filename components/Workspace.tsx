@@ -29,6 +29,13 @@ const Workspace: React.FC<{ config: AppConfig; addLog: (log: any) => void }> = (
     const selected = e.target.files?.[0];
     if (!selected) return;
 
+    // Security: Prevent browser memory exhaustion (DoS) by limiting file size to 10MB
+    const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024;
+    if (selected.size > MAX_FILE_SIZE_BYTES) {
+      alert(`File is too large. Maximum allowed size is 10MB. Selected file is ${(selected.size / (1024 * 1024)).toFixed(2)}MB.`);
+      return;
+    }
+
     const isPdf = selected.type === 'application/pdf';
     const isImage = selected.type.startsWith('image/');
 
