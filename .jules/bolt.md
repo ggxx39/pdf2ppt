@@ -1,0 +1,3 @@
+## 2024-05-24 - Route-level code splitting
+**Learning:** Using React.lazy and React.Suspense for route-level code splitting is highly effective in React single-page applications. In this architecture, components like Workspace import heavy dependencies (`pptxgenjs` and `@google/genai`), and Dashboard imports heavy charting libraries (`recharts`). By dynamically importing these components based on the active tab, the initial bundle size loaded by the browser is significantly reduced, improving the initial load time and overall performance.
+**Action:** Always consider using code splitting for heavy dependencies, particularly when they are tied to specific routes or tabs that may not be accessed immediately upon the application's initial load.
