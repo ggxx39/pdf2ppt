@@ -1,0 +1,3 @@
+## 2026-05-08 - Keyboard accessibility on hover-based interactive elements
+**Learning:** In the `Workspace.tsx` component, the interactive elements (like the 'remove file' icon button) shown inside a hover overlay (`group-hover:opacity-100`) were inaccessible via keyboard navigation because the container remained visually hidden at `opacity-0` when tabbing.
+**Action:** When using Tailwind's `group-hover:opacity-100` to reveal hidden interactive elements on mouse hover, always pair it with `focus-within:opacity-100` on the parent container to ensure the overlay and its controls become visible when users navigate into them using a keyboard. Ensure interactive elements themselves have a defined focus ring.
