@@ -1,0 +1,3 @@
+## 2024-03-24 - Accessibility for Group Hover Items
+**Learning:** When using Tailwind's `group-hover` to conditionally show interactive elements (like the trash icon overlay in `Workspace.tsx`), screen reader and keyboard-only users cannot access them unless `focus-within` is also applied to the group container. Additionally, icon-only buttons need an `aria-label` for screen reader legibility and focus styles (`focus-visible`) for keyboard navigation.
+**Action:** Always pair `group-hover:opacity-100` with `focus-within:opacity-100` on containers to ensure interactive children can be revealed via keyboard navigation, and ensure the interactive children have proper ARIA labels and focus rings.
