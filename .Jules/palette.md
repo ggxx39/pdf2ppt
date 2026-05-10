@@ -1,0 +1,3 @@
+## 2024-05-24 - Interactive Elements Hidden by `group-hover`
+**Learning:** Hidden interactive elements (like the file upload delete button) that only appear on parent `group-hover` create a major keyboard accessibility barrier. If the parent doesn't also have `focus-within:opacity-100` (or similar), keyboard users can focus the element via tab order, but it remains invisible, leaving them confused about where their focus went.
+**Action:** When using Tailwind's `group-hover` to reveal hidden interactive child elements, always pair the reveal class on the parent with `focus-within:opacity-100` to ensure keyboard accessibility. Also ensure hidden icon-only buttons receive `aria-label`s.
