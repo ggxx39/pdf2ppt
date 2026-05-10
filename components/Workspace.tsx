@@ -29,6 +29,13 @@ const Workspace: React.FC<{ config: AppConfig; addLog: (log: any) => void }> = (
     const selected = e.target.files?.[0];
     if (!selected) return;
 
+    // Security: Enforce 10MB file size limit to prevent client-side DoS (memory exhaustion)
+    const MAX_FILE_SIZE = 10 * 1024 * 1024;
+    if (selected.size > MAX_FILE_SIZE) {
+      alert("File size exceeds 10MB limit. Please upload a smaller file.");
+      return;
+    }
+
     const isPdf = selected.type === 'application/pdf';
     const isImage = selected.type.startsWith('image/');
 
@@ -153,11 +160,12 @@ const Workspace: React.FC<{ config: AppConfig; addLog: (log: any) => void }> = (
     } catch (error) {
       console.error(error);
       setIsProcessing(false);
+      // Security: Sanitize error messages in UI to prevent sensitive data leakage
       addLog({
         step: "error_handler",
         reasoning: "API or Processing Exception encountered.",
         confidence: 0,
-        action: `Process halted: ${error instanceof Error ? error.message : "Unknown error"}`,
+        action: `Process halted: An unexpected error occurred during processing.`,
         status: 'error'
       });
     }

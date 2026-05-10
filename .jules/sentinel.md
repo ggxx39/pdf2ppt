@@ -1,0 +1,4 @@
+## 2025-03-05 - [Client-Side Data Handling Vulnerabilities]
+**Vulnerability:** Unrestricted file upload size leading to potential Denial of Service (memory exhaustion) and unsanitized error messages displayed in the UI leading to potential Information Leakage.
+**Learning:** Client-side processing (e.g. FileReader converting to Base64) is vulnerable to memory exhaustion if file sizes are not restricted before processing. Additionally, displaying raw error messages (like `error.message`) in the UI can leak sensitive internal details or stack traces to end users.
+**Prevention:** Implement file size validation (`selected.size > MAX_FILE_SIZE`) before reading files into memory. Always sanitize error messages displayed in user-facing components (e.g., using a generic message like "An unexpected error occurred"), while still logging the raw error internally for debugging.
