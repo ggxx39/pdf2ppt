@@ -1,0 +1,3 @@
+## 2026-05-12 - Dynamic Imports for Tab UIs with Heavy Dependencies
+**Learning:** In a monolithic single-page architecture where routing isn't used and tabs control visibility via state (e.g., `activeTab === 'dashboard'`), standard imports pull all components and their heavy dependencies (like `pptxgenjs` in Workspace and `recharts` in Dashboard) into a single initial JS bundle, slowing down initial load time significantly.
+**Action:** Always use `React.lazy()` and `<Suspense>` to code-split heavy tab components, even when not using a traditional router, to ensure dependencies are only loaded when a user actually navigates to that tab.
