@@ -157,7 +157,8 @@ const Workspace: React.FC<{ config: AppConfig; addLog: (log: any) => void }> = (
         step: "error_handler",
         reasoning: "API or Processing Exception encountered.",
         confidence: 0,
-        action: `Process halted: ${error instanceof Error ? error.message : "Unknown error"}`,
+        // Security: sanitize error message to prevent leaking sensitive info to UI
+        action: "Process halted: An unexpected error occurred during processing.",
         status: 'error'
       });
     }
