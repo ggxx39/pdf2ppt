@@ -29,6 +29,13 @@ const Workspace: React.FC<{ config: AppConfig; addLog: (log: any) => void }> = (
     const selected = e.target.files?.[0];
     if (!selected) return;
 
+    // Security: Prevent client-side DoS by limiting file size to 10MB
+    const MAX_FILE_SIZE = 10 * 1024 * 1024;
+    if (selected.size > MAX_FILE_SIZE) {
+      alert("File is too large. Please upload a file smaller than 10MB.");
+      return;
+    }
+
     const isPdf = selected.type === 'application/pdf';
     const isImage = selected.type.startsWith('image/');
 
