@@ -1,0 +1,4 @@
+## 2025-05-18 - Client-Side DoS and Info Exposure
+**Vulnerability:** Client-side file processing without size limits can cause browser memory exhaustion (DoS). API error messages were being displayed directly to the user.
+**Learning:** In a client-only architecture, large files processed entirely in-memory using `FileReader` and base64 encoding can quickly crash the application. Unsanitized error messages can leak internal system details.
+**Prevention:** Implement strict file size limits (e.g., 10MB) before processing. Always sanitize error messages displayed in the UI while retaining detailed internal logs.
