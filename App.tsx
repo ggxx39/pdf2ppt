@@ -14,10 +14,11 @@ import {
   LogOut
 } from 'lucide-react';
 import { AppConfig, OCRModel, CoTLog } from './types';
-import Dashboard from './components/Dashboard';
-import Workspace from './components/Workspace';
-import ConfigEditor from './components/ConfigEditor';
-import LogPanel from './components/LogPanel';
+// ⚡ Bolt: Use dynamic imports for tab components to reduce initial bundle size and lazy load heavy dependencies
+const Dashboard = React.lazy(() => import('./components/Dashboard'));
+const Workspace = React.lazy(() => import('./components/Workspace'));
+const ConfigEditor = React.lazy(() => import('./components/ConfigEditor'));
+const LogPanel = React.lazy(() => import('./components/LogPanel'));
 
 const DEFAULT_CONFIG: AppConfig = {
   ocr: {
@@ -155,10 +156,12 @@ const App: React.FC = () => {
         </header>
 
         <div className="p-8">
-          {activeTab === 'dashboard' && <Dashboard config={config} logs={logs} />}
-          {activeTab === 'workspace' && <Workspace config={config} addLog={addLog} />}
-          {activeTab === 'config' && <ConfigEditor config={config} setConfig={setConfig} />}
-          {activeTab === 'logs' && <LogPanel logs={logs} />}
+          <React.Suspense fallback={<div className="flex items-center justify-center h-full"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div></div>}>
+            {activeTab === 'dashboard' && <Dashboard config={config} logs={logs} />}
+            {activeTab === 'workspace' && <Workspace config={config} addLog={addLog} />}
+            {activeTab === 'config' && <ConfigEditor config={config} setConfig={setConfig} />}
+            {activeTab === 'logs' && <LogPanel logs={logs} />}
+          </React.Suspense>
         </div>
       </main>
     </div>
