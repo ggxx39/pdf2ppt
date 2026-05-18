@@ -1,0 +1,4 @@
+## 2024-05-18 - Client-Side File Processing DoS & External API Error Leakage
+**Vulnerability:** The application reads uploaded files entirely into memory using `FileReader` without size limits, leading to potential browser memory exhaustion (DoS). Additionally, errors from the Gemini API were directly rendered in the UI log, risking sensitive data exposure.
+**Learning:** Client-side architecture inherently exposes file processing to DoS if inputs aren't capped early. Catch blocks interacting with external APIs must always sanitize error messages before adding them to user-facing logs.
+**Prevention:** Always enforce strict size validation (e.g., 10MB) before loading files into memory via `FileReader`. Log raw API errors internally (e.g., `console.error`) but render generic, sanitized messages to the user UI.
