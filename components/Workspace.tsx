@@ -205,7 +205,7 @@ const Workspace: React.FC<{ config: AppConfig; addLog: (log: any) => void }> = (
           onDrop={(e) => { e.preventDefault(); handleFileChange({ target: { files: e.dataTransfer.files } } as any); }}
         >
           {file ? (
-            <div className="w-full h-full relative group flex flex-col items-center justify-center">
+            <div className="w-full h-full relative group flex flex-col items-center justify-center focus-within:opacity-100">
               {previewUrl ? (
                 <img src={previewUrl} className="max-h-full max-w-full object-contain rounded-xl shadow-lg" alt="Preview" />
               ) : (
@@ -223,10 +223,11 @@ const Workspace: React.FC<{ config: AppConfig; addLog: (log: any) => void }> = (
                 </div>
               )}
               
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4 rounded-xl">
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity flex items-center justify-center gap-4 rounded-xl">
                 <button 
                   onClick={() => { setFile(null); setFileData(null); setPreviewUrl(null); }}
-                  className="p-3 bg-red-500 text-white rounded-full hover:bg-red-600 shadow-lg transform hover:scale-110 transition-transform"
+                  className="p-3 bg-red-500 text-white rounded-full hover:bg-red-600 shadow-lg transform hover:scale-110 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+                  aria-label="Remove uploaded file"
                 >
                   <Trash2 size={24} />
                 </button>
