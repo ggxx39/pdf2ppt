@@ -1,0 +1,3 @@
+## 2025-05-19 - Code Splitting for Large Dependencies
+**Learning:** The application bundles heavy libraries like `recharts` and `pptxgenjs` into the main chunk, resulting in a large initial payload (>1.2MB). Since the app renders different views (Dashboard, Workspace, etc.) conditionally in `App.tsx`, these heavy libraries are loaded upfront even if the user hasn't visited the corresponding tab.
+**Action:** Use `React.lazy()` and `<Suspense>` in `App.tsx` for tab components to automatically code-split the application. This ensures heavy dependencies are only loaded when the user actually navigates to the tab, significantly reducing the initial bundle size and improving the time-to-interactive for the application.
