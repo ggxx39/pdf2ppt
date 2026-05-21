@@ -1,0 +1,3 @@
+## 2024-05-18 - Code Splitting for Heavy Dependencies
+**Learning:** The project's tab-based architecture in `App.tsx` was synchronously importing heavy components like `Workspace` (which uses `pptxgenjs`) and `Dashboard` (which uses `recharts`). This caused the entire application's initial bundle to include these heavy dependencies, even if the user only needed to view logs or settings.
+**Action:** Always use React's `lazy` and `Suspense` to dynamically import conditionally rendered components, especially those that contain heavy third-party dependencies, to ensure the initial load time and main bundle size are minimized.
