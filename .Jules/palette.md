@@ -1,0 +1,3 @@
+## 2024-05-24 - Interactive Overlays Require Focus-Within
+**Learning:** When using Tailwind's `group-hover` to show hidden interactive elements (like a delete button overlay on a file preview), it is critical to pair it with `focus-within` on the parent container. Without `focus-within`, keyboard-only users navigating via tab will focus on the hidden button, but the overlay won't appear, leaving them blind to their current focus state.
+**Action:** Always audit `group-hover` patterns in the application. If the hidden content contains interactive elements, ensure the parent container includes `focus-within` styles to trigger the same visibility state as hover.
